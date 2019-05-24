@@ -65,12 +65,22 @@
     <article id="post-在Swift中使用value objects" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/05/24/在Swift中使用value objects/" class="article-date">
-  <time datetime="2019-05-24T06:43:15.191Z" itemprop="datePublished">2019-05-24</time>
+  <time datetime="2019-05-24T08:05:00.000Z" itemprop="datePublished">2019-05-24</time>
 </a>
     
   </div>
   <div class="article-inner">
     
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/05/24/在Swift中使用value objects/">在Swift中使用value objects</a>
+    </h1>
+  
+
+      </header>
     
     <div class="article-entry" itemprop="articleBody">
       
@@ -80,12 +90,13 @@
 <p>上面代码的缺点：需要在每个地方调用isValidUsername()<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">struct User: Equatable &#123;</span><br><span class="line">    let value: String</span><br><span class="line"></span><br><span class="line">    init?(string: String) &#123;</span><br><span class="line">        guard string.trimmingCharacters(in: .whitespacesAndNewlines).count &gt;= 3 else &#123;</span><br><span class="line">            return nil</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        let illegalCharacters = [&quot;@&quot;, &quot;-&quot;, &quot;&amp;&quot;, &quot;.&quot;]</span><br><span class="line">        guard illegalCharacters.contains(where: string.contains) == false else &#123;</span><br><span class="line">            return nil</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        self.value = string</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func authenticate(user: User) &#123;</span><br><span class="line">    // Proceed with authentication…</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>值对象：value objects should be both immutable and equatable, but they also add in validation as part of their creation. This means that if you’re handed a value object you know for sure it’s already passed validation – you don’t need to re-validate it, because if it were valid then it couldn’t exist.</p>
 <p>设计：参考系统的 <code>URL(string: &quot;This ain&#39;t it chief&quot;)</code><br>好处：安全，扩展性强</p>
-<p>contains与allSatisfy的区别<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 有一个满足就为true</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">contains</span><span class="params">(<span class="keyword">where</span> predicate: <span class="params">(Element)</span></span></span> <span class="keyword">throws</span> -&gt; <span class="type">Bool</span>) <span class="keyword">rethrows</span> -&gt; <span class="type">Bool</span></span><br><span class="line"><span class="comment">// 所以满足就为true</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">allSatisfy</span><span class="params">(<span class="number">_</span> predicate: <span class="params">(Element)</span></span></span> <span class="keyword">throws</span> -&gt; <span class="type">Bool</span>) <span class="keyword">rethrows</span> -&gt; <span class="type">Bool</span></span><br></pre></td></tr></table></figure></p>
+<p>注：contains与allSatisfy的区别<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 有一个满足就为true</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">contains</span><span class="params">(<span class="keyword">where</span> predicate: <span class="params">(Element)</span></span></span> <span class="keyword">throws</span> -&gt; <span class="type">Bool</span>) <span class="keyword">rethrows</span> -&gt; <span class="type">Bool</span></span><br><span class="line"><span class="comment">// 所以满足就为true</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">allSatisfy</span><span class="params">(<span class="number">_</span> predicate: <span class="params">(Element)</span></span></span> <span class="keyword">throws</span> -&gt; <span class="type">Bool</span>) <span class="keyword">rethrows</span> -&gt; <span class="type">Bool</span></span><br></pre></td></tr></table></figure></p>
+<p>参考：<a href="https://www.hackingwithswift.com/articles/188/improving-your-swift-code-using-value-objects" target="_blank" rel="noopener">Improving your Swift code using value objects</a></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/05/24/在Swift中使用value objects/" data-id="cjw1sqyav0002bm2xlkscluna" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/05/24/在Swift中使用value objects/" data-id="cjw1syuff0000e62xje858y1h" class="article-share-link">Share</a>
       
       
     </footer>
@@ -126,7 +137,7 @@
       <ul>
         
           <li>
-            <a href="/2019/05/24/在Swift中使用value objects/">(no title)</a>
+            <a href="/2019/05/24/在Swift中使用value objects/">在Swift中使用value objects</a>
           </li>
         
       </ul>
